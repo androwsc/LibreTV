@@ -1104,6 +1104,8 @@ function showVideoPlayer(url) {
     videoPlayerFrame.className = 'fixed w-full h-screen z-40';
     videoPlayerFrame.src = url;
     document.body.appendChild(videoPlayerFrame);
+    // 将焦点移入iframe
+    videoPlayerFrame.focus();
 }
 
 // 关闭播放器页面
@@ -1124,7 +1126,8 @@ function closeVideoPlayer(home = false) {
         }
     }
     if (home) {
-        resetToHome();
+        // 刷新主页
+        window.location.href = '/'
     }
 }
 
