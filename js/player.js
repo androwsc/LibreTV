@@ -88,6 +88,7 @@ let shortcutHintTimeout = null; // 用于控制快捷键提示显示时间
 let adFilteringEnabled = true; // 默认开启广告过滤
 let progressSaveInterval = null; // 定期保存进度的计时器
 let currentVideoUrl = ''; // 记录当前实际的视频URL
+let pendingFullscreenRestore = false; // 标记是否需要恢复全屏状态
 
 // 页面加载
 document.addEventListener('DOMContentLoaded', function () {
@@ -626,6 +627,12 @@ function initPlayer(videoUrl) {
 
         // 启动定期保存播放进度
         startProgressSaveInterval();
+
+        // 检查是否需要恢复全屏状态
+        if (pendingFullscreenRestore) {
+            art.fullscreen = true;
+            pendingFullscreenRestore = false; // 重置标记
+        }
     })
 
     // 错误处理
@@ -655,6 +662,9 @@ function initPlayer(videoUrl) {
 
         // 如果自动播放下一集开启，且确实有下一集
         if (autoplayEnabled && currentEpisodeIndex < currentEpisodes.length - 1) {
+            // 记录是否需要恢复全屏状态
+            pendingFullscreenRestore = art.fullscreen;
+
             // 稍长延迟以确保所有事件处理完成
             setTimeout(() => {
                 // 确认不是因为用户拖拽导致的假结束事件
@@ -662,6 +672,7 @@ function initPlayer(videoUrl) {
                 videoHasEnded = false; // 重置标志
             }, 1000);
         } else {
+            art.fullscreen = false;
         }
     });
 
