@@ -11,7 +11,7 @@ jobs:
     steps:
       - uses: TobKed/github-forks-sync-action@master
         with:
-          github_token: ${{ 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 }} # 令牌
+          github_token: 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  # 令牌
           upstream_repository: LibreSpark/LibreTV  # 上游仓库
           target_repository: androwsc/freenom  # 你要推送的仓库
           upstream_branch: master  # 默认是拉取上游仓库的master分支
